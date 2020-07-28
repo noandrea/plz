@@ -2,8 +2,37 @@
 ## [Unreleased]
 
 
-<a name="0.1.0"></a>
-## [0.1.0] - 2020-07-28
+<a name="v0.2.0"></a>
+## [v0.2.0] - 2020-07-28
+### Build
+- fix makefile test command
+- fix build-zip command in makefile
+
+### Doc
+- updated docs
+- add asciicast examples
+
+### Feat
+- improve consistency of the json reply format
+- make massage paramters compatible with plzpy
+
+### Misc
+- minor dependency update
+
+### BREAKING CHANGE
+
+change the layout of json reply
+
+The old format for historical data was [{year:value}, {year,value}, ..]
+This change makes the output format more verbose but easier to deal with:
+[{'year':year, 'count': value}...]
+Also rename the 'count' label to 'total' for aggregated count
+
+the cli massage paramters (--in,--out) are now called (--input,--output)
+
+
+<a name="v0.1.0"></a>
+## v0.1.0 - 2020-07-28
 ### Build
 - add docker support
 - add makefile and config for changelog gen
@@ -22,8 +51,5 @@
 - add testing for dataset ETL
 
 
-<a name="0.0.0"></a>
-## 0.0.0 - 2020-07-28
-
-[Unreleased]: https://github.com/noandrea/plz/compare/0.1.0...HEAD
-[0.1.0]: https://github.com/noandrea/plz/compare/0.0.0...0.1.0
+[Unreleased]: https://github.com/noandrea/plz/compare/v0.2.0...HEAD
+[v0.2.0]: https://github.com/noandrea/plz/compare/v0.1.0...v0.2.0
