@@ -41,7 +41,7 @@ func init() {
 
 // listen starts the web server
 func serve(cmd *cobra.Command, args []string) {
-	log.Info(welcome)
+	fmt.Println(welcome)
 	// open the database
 	log.Info("serving data from ", dataFilePath)
 	data, err := loadData(dataFilePath)
