@@ -1,6 +1,6 @@
 GOFILES = $(shell find . -name '*.go' -not -path './vendor/*')
 GOPACKAGES = $(shell go list ./...  | grep -v /vendor/)
-GIT_DESCR = $(shell git describe --tags --always) 
+GIT_DESCR = $(shell git describe --tags --always)
 APP=plz
 # build output folder
 OUTPUTFOLDER = dist
@@ -33,8 +33,8 @@ build-dist: $(GOFILES)
 
 build-zip: build
 	@echo build zip release
-	zip -FSmT $(APP)-v$(GIT_DESCR).zip $(OUTPUTFOLDER)
-	sha1sum $(APP)-v$(GIT_DESCR).zip
+	zip -FSmT $(APP)-$(GIT_DESCR).zip $(OUTPUTFOLDER)
+	sha1sum $(APP)-$(GIT_DESCR).zip
 	@echo done
 
 test: test-all
