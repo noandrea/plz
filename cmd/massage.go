@@ -64,7 +64,7 @@ func massage(csvPath, jsonPath string) (err error) {
 	}
 
 	// output
-	dist := make(map[string]map[string]int)
+	aggregate := make(map[string]map[string]int)
 	// read all the lines
 	var x int
 	for {
@@ -79,10 +79,10 @@ func massage(csvPath, jsonPath string) (err error) {
 
 		// TODO: this slicing is an overly optimistic assumption that the row will always be there
 		z, y := line[iZip], line[iYear][0:4]
-		if c, xs := dist[z]; xs {
+		if c, xs := aggregate[z]; xs {
 			c[y]++
 		} else {
-			dist[z] = map[string]int{y: 1}
+			aggregate[z] = map[string]int{y: 1}
 		}
 		// print progress
 		x++
@@ -96,13 +96,13 @@ func massage(csvPath, jsonPath string) (err error) {
 	// prepare aggregation
 
 	type yc struct {
-		year  string
-		count int
+		Year  string `json:"year,omitempty"`
+		Count int    `json:"count,omitempty"`
 	}
 
-	distrib := make(map[string][]map[string]int, len(dist))
-	counter := make(map[string]map[string]int, len(dist))
-	for z, ycm := range dist {
+	distrib := make(map[string][]yc, len(aggregate))
+	counter := make(map[string]map[string]int, len(aggregate))
+	for z, ycm := range aggregate {
 		// sort and aggregate
 		ycs, i := make([]yc, len(ycm)), 0
 		sum := 0
@@ -114,17 +114,12 @@ func massage(csvPath, jsonPath string) (err error) {
 		}
 		// sort by year ascending
 		sort.SliceStable(ycs, func(i, j int) bool {
-			return ycs[i].year < ycs[j].year
+			return ycs[i].Year < ycs[j].Year
 		})
-		// make it nice for the desired output
-		ycj := make([]map[string]int, len(ycs))
-		for i, yc := range ycs {
-			ycj[i] = map[string]int{yc.year: yc.count}
-		}
 		// add the distribution to the result
-		distrib[z] = ycj
+		distrib[z] = ycs
 		// add the sum to the result
-		counter[z] = map[string]int{"count": sum}
+		counter[z] = map[string]int{"total": sum}
 	}
 	fmt.Println("Data processed after ", time.Since(start))
 	// transform everything in a big json blob
