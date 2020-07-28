@@ -9,20 +9,23 @@ import (
 	"sort"
 	"time"
 
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
+
+// will contain the stuff that we need
+var csvPath, jsonPath string
 
 // massageCmd represents the massage command
 var massageCmd = &cobra.Command{
 	Use:   "massage",
 	Short: "Transform data from ESRI CSV to JSON suitable for serving zip info",
 	Long:  ``,
-	Run:   massage,
+	Run: func(cmd *cobra.Command, args []string) {
+		// print the welcome screen
+		fmt.Println(welcome)
+		massage(csvPath, jsonPath)
+	},
 }
-
-// will contain the stuff that we need
-var csvPath, jsonPath string
 
 func init() {
 	rootCmd.AddCommand(massageCmd)
@@ -32,16 +35,13 @@ func init() {
 
 // massage process input dataset to create an API optimized
 // json to be served with the serve command
-func massage(cmd *cobra.Command, args []string) {
-	// print the welcome screen
-	fmt.Println(welcome)
+func massage(csvPath, jsonPath string) (err error) {
 	// begin processing
 	start := time.Now()
 	// open the csv file
 	csvF, err := os.Open(csvPath)
 	if err != nil {
-		fmt.Println("Cannot open the file", csvPath, "for reading (use --debug for more info)")
-		log.Debug("error ", err)
+		fmt.Println("Cannot open the file", csvPath, "for reading:", err)
 		return
 	}
 	// print the size
@@ -59,8 +59,7 @@ func massage(cmd *cobra.Command, args []string) {
 	// skip header
 	_, err = csvR.Read()
 	if err != nil {
-		fmt.Println("Error reading CSV! (use --debug for more info)")
-		log.Debug(err)
+		fmt.Println("Error reading CSV!", err)
 		return
 	}
 
@@ -74,7 +73,7 @@ func massage(cmd *cobra.Command, args []string) {
 			break
 		}
 		if err != nil {
-			log.Error("Error reading line ", err)
+			fmt.Println("WARNING: reading line ", err)
 			continue
 		}
 
@@ -140,20 +139,19 @@ func massage(cmd *cobra.Command, args []string) {
 	// finally write the output
 	jsonF, err := os.Create(jsonPath)
 	if err != nil {
-		fmt.Println("Cannot open the file", jsonPath, "for writing (use --debug for more info)")
-		log.Debug(err)
+		fmt.Println("Cannot open the file", jsonPath, ":", err)
 		return
 	}
 	defer jsonF.Close()
 
 	n, err := jsonF.Write(outB)
 	if err != nil {
-		fmt.Println("Error writing JSON! (use --debug for more info)")
-		log.Debug(err)
+		fmt.Println("Error writing JSON! ", err)
 		return
 	}
 
 	fmt.Printf("Output size (gb) is %.4f\n", (float64(n) / 1e9))
 	fmt.Println("Output written at", jsonPath)
 	fmt.Println("Completed in ", time.Since(start))
+	return
 }
