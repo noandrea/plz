@@ -21,8 +21,7 @@ PLZ provides the following endpoints:
 
 ## Usage
 
-There are 2 ways to run the PLZ api service, via [manual setup](#Manual_setup) or using [Docker](#Docker).
-Docker is the preferred way.
+There are 2 ways to run the PLZ api service: using [Docker](#docker)(recommended) or via [manual setup](#manual-setup).
 
 ### Docker
 
