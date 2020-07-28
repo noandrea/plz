@@ -2,7 +2,7 @@
 
 A simple rest API that exposes data related to zip codes and buildings in Berlin.
 
-The source dataset is published by [Esri](https://www.esri.de/de-de/home) 
+The source dataset is published by [Esri](https://www.esri.de/de-de/home)
 and is available [here](https://opendata-esri-de.opendata.arcgis.com/datasets/273bf4ae7f6a460fbf3000d73f7b2f76_0).
 
 ## Motivations
@@ -23,6 +23,8 @@ PLZ provides the following endpoints:
 
 There are 2 ways to run the PLZ api service: using [Docker](#docker)(recommended) or via [manual setup](#manual-setup).
 
+> For more details about the command line options, use the command `plz --help`
+
 ### Docker
 
 The Docker image is available at [noandrea/plz](https://hub.docker.com/repository/docker/noandrea/plz), and can be run with
@@ -33,31 +35,41 @@ docker run -p 2007:2007 noandrea/plz
 
 The image is built on [scratch](https://hub.docker.com/_/scratch), the image size is ~9.3mb:
 
-[![asciicast](https://asciinema.org/a/350213.svg)](https://asciinema.org/a/350213)
+[![asciicast](https://asciinema.org/a/350265.svg)](https://asciinema.org/a/350265?autoplay=1)
 
 ### Manual setup
 
-There are 3 steps to setup the service:
+Those are the steps to setup the service:
 
-1. Download the dataset linked above:
+1. Install `plz`
+
+```
+go get github.com/noandrea/plz
+```
+
+**OR**
+
+Download the latest from the [release page](https://github.com/noandrea/plz/releases)
+
+2. Download the dataset linked above:
 
 ```sh
 curl -L https://opendata.arcgis.com/datasets/273bf4ae7f6a460fbf3000d73f7b2f76_0.csv?outSR=%7B%22latestWkid%22%3A3857%2C%22wkid%22%3A102100%7D -o /tmp/src.csv
 ```
 
-2. Massage the dataset to produce an optimized json to be served via the Rest API
+3. Massage the dataset to produce an optimized json to be served via the Rest API
 
 ```sh
 plz massage --input /tmp/src.csv --output rest.json
 ```
 
-3. Run the Rest API service
+4. Run the Rest API service
 
 ```sh
 plz serve --data rest.json
 ```
 
-[![asciicast](https://asciinema.org/a/350219.svg)](https://asciinema.org/a/350219)
+[![asciicast](https://asciinema.org/a/350262.svg)](https://asciinema.org/a/350262?t=63&autoplay=1)
 
 ## Examples
 
