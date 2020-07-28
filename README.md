@@ -33,6 +33,8 @@ docker run -p 2007:2007 noandrea/plz
 
 The image is built on [scratch](https://hub.docker.com/_/scratch), the image size is ~9.3mb:
 
+[![asciicast](https://asciinema.org/a/350213.svg)](https://asciinema.org/a/350213)
+
 ### Manual setup
 
 There are 3 steps to setup the service:
@@ -54,6 +56,8 @@ plz massage --in /tmp/src.csv --out rest.json
 ```sh
 plz serve --data rest.json
 ```
+
+[![asciicast](https://asciinema.org/a/350219.svg)](https://asciinema.org/a/350219)
 
 ## Examples
 
