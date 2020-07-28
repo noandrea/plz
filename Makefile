@@ -40,7 +40,7 @@ build-zip: build
 test: test-all
 
 test-all:
-	@go test $(GOPACKAGES) v -race -coverprofile=cover.out -covermode=atomic
+	@go test $(GOPACKAGES) -v -race -coverprofile=cover.out -covermode=atomic
 
 bench: bench-all
 
