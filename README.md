@@ -48,7 +48,7 @@ curl -L https://opendata.arcgis.com/datasets/273bf4ae7f6a460fbf3000d73f7b2f76_0.
 2. Massage the dataset to produce an optimized json to be served via the Rest API
 
 ```sh
-plz massage --in /tmp/src.csv --out rest.json
+plz massage --input /tmp/src.csv --output rest.json
 ```
 
 3. Run the Rest API service

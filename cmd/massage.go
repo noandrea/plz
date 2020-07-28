@@ -29,8 +29,8 @@ var massageCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(massageCmd)
-	massageCmd.Flags().StringVarP(&csvPath, "in", "i", "data.csv", "The input csv file (default data.csv)")
-	massageCmd.Flags().StringVarP(&jsonPath, "out", "o", "data.json", "The output json file (default data.json)")
+	massageCmd.Flags().StringVarP(&csvPath, "input", "i", "data.csv", "The input csv file (default data.csv)")
+	massageCmd.Flags().StringVarP(&jsonPath, "output", "o", "data.json", "The output json file (default data.json)")
 }
 
 // massage process input dataset to create an API optimized

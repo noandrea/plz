@@ -17,7 +17,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /plz -ldflags="-s -w -extl
 # download the location file 
 RUN curl -L $DATA_URL -o /tmp/data.csv
 # build the database
-RUN /plz massage --in /tmp/data.csv --out /data.json
+RUN /plz massage --input /tmp/data.csv --output /data.json
 ############################
 # STEP 2 build a small image
 ############################
