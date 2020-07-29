@@ -33,7 +33,7 @@ build-dist: $(GOFILES)
 
 build-zip: build
 	@echo build zip release
-	zip -FSmT $(APP)-$(GIT_DESCR).zip $(OUTPUTFOLDER)
+	zip -rmT $(APP)-$(GIT_DESCR).zip $(OUTPUTFOLDER)
 	sha1sum $(APP)-$(GIT_DESCR).zip
 	@echo done
 
