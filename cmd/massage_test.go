@@ -18,7 +18,7 @@ func Test_massage(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := massage(tt.args.csvPath, tt.args.jsonPath); (err != nil) != tt.wantErr {
+			if err := massage(tt.args.csvPath, tt.args.jsonPath, true); (err != nil) != tt.wantErr {
 				t.Errorf("massage() error = %v, wantErr %v", err, tt.wantErr)
 			}
 			if tt.wantErr {

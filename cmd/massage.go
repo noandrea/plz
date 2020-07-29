@@ -14,6 +14,7 @@ import (
 
 // will contain the stuff that we need
 var csvPath, jsonPath string
+var summary bool
 
 // massageCmd represents the massage command
 var massageCmd = &cobra.Command{
@@ -23,7 +24,7 @@ var massageCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// print the welcome screen
 		fmt.Println(welcome)
-		massage(csvPath, jsonPath)
+		massage(csvPath, jsonPath, summary)
 	},
 }
 
@@ -31,11 +32,12 @@ func init() {
 	rootCmd.AddCommand(massageCmd)
 	massageCmd.Flags().StringVarP(&csvPath, "input", "i", "data.csv", "The input csv file (default data.csv)")
 	massageCmd.Flags().StringVarP(&jsonPath, "output", "o", "data.json", "The output json file (default data.json)")
+	massageCmd.Flags().BoolVarP(&summary, "summary", "s", false, "Print only execution summary")
 }
 
 // massage process input dataset to create an API optimized
 // json to be served with the serve command
-func massage(csvPath, jsonPath string) (err error) {
+func massage(csvPath, jsonPath string, summary bool) (err error) {
 	// begin processing
 	start := time.Now()
 	// open the csv file
@@ -86,9 +88,12 @@ func massage(csvPath, jsonPath string) (err error) {
 		}
 		// print progress
 		x++
-		fmt.Printf("\rrecords %d", x)
+		if !summary {
+			fmt.Printf("\rrecords %d", x)
+		}
+
 	}
-	fmt.Println()
+	fmt.Println("Processed", x, "records")
 	fmt.Println("Data read after ", time.Since(start))
 	// transform
 	// make two maps counts/distrib
