@@ -2,6 +2,15 @@
 ## [Unreleased]
 
 
+<a name="v0.2.1"></a>
+## [v0.2.1] - 2020-07-29
+### Build
+- fix zip command
+
+### Fix
+- add option to suppress progress print on stdout
+
+
 <a name="v0.2.0"></a>
 ## [v0.2.0] - 2020-07-28
 ### Build
@@ -51,5 +60,6 @@ the cli massage paramters (--in,--out) are now called (--input,--output)
 - add testing for dataset ETL
 
 
-[Unreleased]: https://github.com/noandrea/plz/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/noandrea/plz/compare/v0.2.1...HEAD
+[v0.2.1]: https://github.com/noandrea/plz/compare/v0.2.0...v0.2.1
 [v0.2.0]: https://github.com/noandrea/plz/compare/v0.1.0...v0.2.0
